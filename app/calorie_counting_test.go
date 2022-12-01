@@ -102,7 +102,71 @@ func (suite *CaloriesTestSuite) Test_CalorieCounting() {
 	}
 
 	for _, tt := range tests {
-		count, err := CalorieCounting(tt.input)
+		count, err := CalorieCounting(tt.input, 1)
+
+		suite.NoError(err)
+		suite.Equal(tt.calorieCount, count)
+	}
+}
+
+func (suite *CaloriesTestSuite) Test_CalorieCounting_ThreeElves() {
+	tests := []struct {
+		input        string
+		calorieCount int
+	}{
+		{
+			input: `1
+
+1
+
+1`,
+			calorieCount: 3,
+		},
+		{
+			input: `1
+
+2
+
+1`,
+			calorieCount: 4,
+		},
+		{
+			input: `1
+
+2
+3
+
+1`,
+			calorieCount: 7,
+		},
+		{
+			input: `1
+
+2
+3
+
+1
+
+10`,
+			calorieCount: 16,
+		},
+		{
+			input: `1
+
+2
+3
+
+16
+
+1
+
+10`,
+			calorieCount: 31,
+		},
+	}
+
+	for _, tt := range tests {
+		count, err := CalorieCounting(tt.input, 3)
 
 		suite.NoError(err)
 		suite.Equal(tt.calorieCount, count)

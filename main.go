@@ -2274,10 +2274,18 @@ func main() {
 	1691
 `
 
-	count, err := app.CalorieCounting(realInput)
+	count, err := app.CalorieCounting(realInput, 1)
 	if err != nil {
 		fmt.Printf("Boy, you missed: %s", err)
 	} else {
-		fmt.Printf("Your calorie count is %d\n", count)
+		fmt.Printf("Your calorie count for one elve is %d\n", count)
 	}
+
+	threeCount, err := app.CalorieCounting(realInput, 3)
+	if err != nil {
+		fmt.Printf("Boy, you missed: %s", err)
+	} else {
+		fmt.Printf("Your calorie count for three elves is %d\n", threeCount)
+	}
+
 }

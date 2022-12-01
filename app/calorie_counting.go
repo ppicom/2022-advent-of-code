@@ -5,13 +5,13 @@ import (
 	"strings"
 )
 
-func CalorieCounting(input string) (int, error) {
+func CalorieCounting(input string, nOfElves int) (int, error) {
 	sanitizedInput := strings.TrimSuffix(input, "\n")
 	sanitizedInput = strings.TrimPrefix(sanitizedInput, "\n")
 	sanitizedInput = strings.ReplaceAll(sanitizedInput, "\t", "")
 	listOfStringsReprOneElfSnacks := strings.Split(sanitizedInput, "\n\n")
 
-	var mostCaloriesCarriedByOneElf int
+	rankedCaloryTotals := make([]int, nOfElves)
 	for _, stringReprOneElfSnacks := range listOfStringsReprOneElfSnacks {
 		listOfStrReprOneSnack := strings.Split(stringReprOneElfSnacks, "\n")
 		var caloriesCarriedByThisElf int
@@ -24,10 +24,21 @@ func CalorieCounting(input string) (int, error) {
 			caloriesCarriedByThisElf += int(caloriesOfASnack)
 		}
 
-		if caloriesCarriedByThisElf > mostCaloriesCarriedByOneElf {
-			mostCaloriesCarriedByOneElf = caloriesCarriedByThisElf
+		for i := 0; i < len(rankedCaloryTotals); i++ {
+			if caloriesCarriedByThisElf > rankedCaloryTotals[i] {
+				for j := len(rankedCaloryTotals) - 1; j > i; j-- {
+					rankedCaloryTotals[j] = rankedCaloryTotals[j-1]
+				}
+
+				rankedCaloryTotals[i] = caloriesCarriedByThisElf
+				break
+			}
 		}
 	}
+	var grandTotal int
+	for _, c := range rankedCaloryTotals {
+		grandTotal += c
+	}
 
-	return mostCaloriesCarriedByOneElf, nil
+	return grandTotal, nil
 }
