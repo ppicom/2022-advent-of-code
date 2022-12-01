@@ -6,28 +6,28 @@ import (
 )
 
 func CalorieCounting(input string) (int, error) {
-	trimmedInput := strings.TrimSuffix(input, "\n")
-	trimmedInput = strings.TrimPrefix(trimmedInput, "\n")
-	trimmedInput = strings.ReplaceAll(trimmedInput, "\t", "")
-	separated := strings.Split(trimmedInput, "\n\n")
+	sanitizedInput := strings.TrimSuffix(input, "\n")
+	sanitizedInput = strings.TrimPrefix(sanitizedInput, "\n")
+	sanitizedInput = strings.ReplaceAll(sanitizedInput, "\t", "")
+	listOfStringsReprOneElfSnacks := strings.Split(sanitizedInput, "\n\n")
 
-	var biggestSum int
-	for _, elveCalories := range separated {
-		split := strings.Split(elveCalories, "\n")
-		var sum int
-		for _, intStr := range split {
-			parsed, err := strconv.ParseInt(intStr, 10, 64)
+	var mostCaloriesCarriedByOneElf int
+	for _, stringReprOneElfSnacks := range listOfStringsReprOneElfSnacks {
+		listOfStrReprOneSnack := strings.Split(stringReprOneElfSnacks, "\n")
+		var caloriesCarriedByThisElf int
+		for _, strReprOneSnack := range listOfStrReprOneSnack {
+			caloriesOfASnack, err := strconv.ParseInt(strReprOneSnack, 10, 64)
 			if err != nil {
 				return 0, err
 			}
 
-			sum += int(parsed)
+			caloriesCarriedByThisElf += int(caloriesOfASnack)
 		}
 
-		if sum > biggestSum {
-			biggestSum = sum
+		if caloriesCarriedByThisElf > mostCaloriesCarriedByOneElf {
+			mostCaloriesCarriedByOneElf = caloriesCarriedByThisElf
 		}
 	}
 
-	return biggestSum, nil
+	return mostCaloriesCarriedByOneElf, nil
 }
