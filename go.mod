@@ -1,4 +1,4 @@
-module github.com/ppicom/gdc2022-go
+module github.com/ppicom/2022-advent-of-code
 
 go 1.19
 
