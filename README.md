@@ -1,1 +1,1 @@
-# Global Day of Coderetreat 2022 - Go version
+# Advent Of Code 2022 - Go Flavor
