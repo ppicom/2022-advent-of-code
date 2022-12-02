@@ -82,6 +82,40 @@ C Z`,
 	}
 }
 
+func (suite *RockPaperScissorsTestSuite) TestPlaySecondStrategy() {
+	tests := []struct {
+		input  string
+		output int
+	}{
+		{
+			input:  `A Y`,
+			output: 4,
+		},
+		{
+			input:  `B X`,
+			output: 1,
+		},
+		{
+			input:  `C Z`,
+			output: 7,
+		},
+		{
+			input: `A Y
+B X
+C Z`,
+			output: 12,
+		},
+	}
+
+	for _, tt := range tests {
+
+		score, err := RockPaperScissorsStrategy(tt.input)
+
+		suite.NoError(err)
+		suite.Equal(tt.output, score)
+	}
+}
+
 func TestShouldTest(t *testing.T) {
 	suite.Run(t, new(RockPaperScissorsTestSuite))
 }

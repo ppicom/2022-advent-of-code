@@ -1,6 +1,87 @@
 package app
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
+
+func RockPaperScissorsStrategy(input string) (int, error) {
+	sanitizedInput := strings.TrimPrefix(input, "\n")
+	sanitizedInput = strings.TrimSuffix(sanitizedInput, "\n")
+	sanitizedInput = strings.ReplaceAll(sanitizedInput, "\t", "")
+	listOfGames := strings.Split(sanitizedInput, "\n")
+
+	var myScoreForAllGames int
+	for _, aGame := range listOfGames {
+		strategyOfAGame := strings.Split(aGame, " ")
+
+		opponentsHand, mustEndIn := strategyOfAGame[0], strategyOfAGame[1]
+
+		var myScoreForThisHand int
+		var myHand string
+		switch mustEndIn {
+		case "X":
+			myHand = LoseTo(opponentsHand)
+		case "Z":
+			myHand = WinTo(opponentsHand)
+		case "Y":
+			myHand = Draw(opponentsHand)
+		}
+
+		play := fmt.Sprintf("%s %s", opponentsHand, myHand)
+		score, err := RockPaperScissors(play)
+		if err != nil {
+			return 0, err
+		}
+
+		myScoreForThisHand = score
+
+		myScoreForAllGames += myScoreForThisHand
+
+	}
+
+	return myScoreForAllGames, nil
+
+}
+
+func LoseTo(otherHand string) string {
+	switch otherHand {
+	case "A":
+		return "Z"
+	case "B":
+		return "X"
+	case "C":
+		fallthrough
+	default:
+		return "Y"
+	}
+}
+
+func Draw(otherHand string) string {
+	switch otherHand {
+	case "A":
+		return "X"
+	case "B":
+		return "Y"
+	case "C":
+		fallthrough
+	default:
+		return "Z"
+	}
+}
+
+func WinTo(otherHand string) string {
+	switch otherHand {
+	case "A":
+		return "Y"
+	case "B":
+		return "Z"
+	case "C":
+		fallthrough
+	default:
+		return "X"
+	}
+}
 
 func RockPaperScissors(input string) (int, error) {
 	sanitizedInput := strings.TrimPrefix(input, "\n")
