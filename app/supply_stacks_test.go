@@ -85,6 +85,34 @@ move 1 from 1 to 2
 	}
 }
 
+func (suite *TestSuite) TestMoveCratesBetweenStacksInChunks() {
+	tests := []struct {
+		input  string
+		output string
+	}{
+		{
+			input: `    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2
+`,
+			output: "MCD",
+		},
+	}
+
+	for _, tt := range tests {
+
+		topmostCases := MoveSupplyStacksUsingNewCrane(tt.input)
+
+		suite.Equal(tt.output, topmostCases)
+	}
+}
+
 func TestShouldTest(t *testing.T) {
 	suite.Run(t, new(TestSuite))
 }

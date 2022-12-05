@@ -7,7 +7,15 @@ import (
 )
 
 func MoveSupplyStacks(input string) (topmostStacks string) {
+	return moveCrates(input, false)
+}
 
+func MoveSupplyStacksUsingNewCrane(input string) (topmostStacks string) {
+
+	return moveCrates(input, true)
+}
+
+func moveCrates(input string, useNewCrate bool) string {
 	stacksInput, instructionsInput := strings.Split(input, "\n\n")[0], strings.Split(input, "\n\n")[1]
 
 	stacksInput = sanitize(stacksInput)
@@ -20,7 +28,7 @@ func MoveSupplyStacks(input string) (topmostStacks string) {
 		for _, instruction := range instructionsList {
 			amount, from, to := parseInstruction(instruction)
 
-			stacks.Move(amount, from, to)
+			stacks.Move(amount, from, to, useNewCrate)
 		}
 	}
 
@@ -93,15 +101,23 @@ func (stacks StacksMatrix) TopmostElements() (topmostElements string) {
 	return
 }
 
-func (stacks *StacksMatrix) Move(crates, fromStack, toStack int64) {
+func (stacks *StacksMatrix) Move(crates, fromStack, toStack int64, usingNewCrate bool) {
 
-	for i := 0; i < int(crates); i++ {
+	from, to := stacks.At(fromStack), stacks.At(toStack)
 
-		from, to := stacks.At(fromStack), stacks.At(toStack)
-		last := from.Unstack()
-		if last != "" {
-			to.Stack(last)
+	if !usingNewCrate {
+
+		for i := 0; i < int(crates); i++ {
+
+			last := from.Unstack()
+			if last != "" {
+
+				to.Stack(last)
+			}
 		}
+	} else {
+		last := from.UnstackMany(crates)
+		to.StackMany(last)
 	}
 }
 
@@ -126,6 +142,20 @@ func (stack *Stack) Unstack() (topmost string) {
 	return
 }
 
+func (stack *Stack) UnstackMany(crates int64) (topmost Stack) {
+
+	current := *stack
+
+	topmost = current[len(current)-int(crates):]
+
+	remaining := current[:len(current)-int(crates)]
+
+	*stack = remaining
+
+	return
+
+}
+
 func (stack *Stack) Stack(crate string) {
 
 	list := *stack
@@ -133,4 +163,12 @@ func (stack *Stack) Stack(crate string) {
 	list = append(list, crate)
 
 	*stack = list
+}
+
+func (stack *Stack) StackMany(crates Stack) {
+	current := *stack
+
+	withStacked := append(current, crates...)
+
+	*stack = withStacked
 }

@@ -16,4 +16,8 @@ func main() {
 	crates := app.MoveSupplyStacks(string(data))
 
 	fmt.Printf("The topmost crates are: %s\n", crates)
+
+	crates = app.MoveSupplyStacksUsingNewCrane(string(data))
+
+	fmt.Printf("The topmost crates now are: %s\n", crates)
 }
