@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/ppicom/2022-advent-of-code/app"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	data, err := os.ReadFile(("./input.txt"))
+	if err != nil {
+		panic(err)
+	}
+
+	crates := app.MoveSupplyStacks(string(data))
+
+	fmt.Printf("The topmost crates are: %s\n", crates)
 }
