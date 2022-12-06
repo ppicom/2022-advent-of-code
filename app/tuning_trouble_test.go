@@ -14,13 +14,29 @@ func (suite *TestSuite) TestPlay() {
 	tests := []struct {
 		input  string
 		output int
-	}{}
+	}{
+		{
+			input:  "bvwbjplbgvbhsrlpgdmjqwftvncz",
+			output: 5,
+		},
+		{
+			input:  "nppdvjthqldpwncqszvftbrmjlhg",
+			output: 6,
+		},
+		{
+			input:  "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
+			output: 10,
+		},
+		{
+			input:  "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw",
+			output: 11,
+		},
+	}
 
 	for _, tt := range tests {
 
-		score, err := BeingTested(tt.input)
+		score := CharsToStartOfPacket(tt.input)
 
-		suite.NoError(err)
 		suite.Equal(tt.output, score)
 	}
 }
