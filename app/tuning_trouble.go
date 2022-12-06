@@ -4,9 +4,20 @@ import "strings"
 
 const (
 	START_OF_PACKET_MARKER_LEN int = 4
+	START_OF_MSG_MARKER_LEN    int = 14
 )
 
 func CharsToStartOfPacket(input string) (charsToPacket int) {
+
+	return findMarker(START_OF_PACKET_MARKER_LEN, input)
+}
+
+func CharsToStartOfMessage(input string) (charsToMsg int) {
+
+	return findMarker(START_OF_MSG_MARKER_LEN, input)
+}
+
+func findMarker(marker int, input string) (charsToPacket int) {
 
 	signals := strings.Split(input, "")
 
@@ -17,7 +28,7 @@ func CharsToStartOfPacket(input string) (charsToPacket int) {
 
 	for i := 0; i < len(signals) && !found; i++ {
 
-		found, where = markerStartsAt(i, START_OF_PACKET_MARKER_LEN, signals)
+		found, where = markerStartsAt(i, marker, signals)
 	}
 
 	if found {
@@ -25,7 +36,6 @@ func CharsToStartOfPacket(input string) (charsToPacket int) {
 	}
 
 	return
-
 }
 
 func markerStartsAt(position, markerLen int, signals []string) (found bool, where int) {

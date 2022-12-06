@@ -10,7 +10,11 @@ import (
 func main() {
 	dat, _ := os.ReadFile("./input.txt")
 
-	markersToPacket := app.CharsToStartOfPacket(string(dat))
+	signalsToPacket := app.CharsToStartOfPacket(string(dat))
 
-	fmt.Printf("There are %d markers to start of packet.\n", markersToPacket)
+	fmt.Printf("There are %d markers to start of packet.\n", signalsToPacket)
+
+	signalsToMsg := app.CharsToStartOfMessage(string(dat))
+
+	fmt.Printf("There are %d markers to start of message.\n", signalsToMsg)
 }

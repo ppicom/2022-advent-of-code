@@ -41,40 +41,40 @@ func (suite *TestSuite) Test_FindStartOfPacket() {
 	}
 }
 
-// func (suite *TestSuite) Test_FindStartOfMessage() {
-// 	tests := []struct {
-// 		input  string
-// 		output int
-// 	}{
-// 		{
-// 			input:  "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
-// 			output: 19,
-// 		},
-// 		{
-// 			input:  "bvwbjplbgvbhsrlpgdmjqwftvncz",
-// 			output: 23,
-// 		},
-// 		{
-// 			input:  "nppdvjthqldpwncqszvftbrmjlhg",
-// 			output: 23,
-// 		},
-// 		{
-// 			input:  "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
-// 			output: 29,
-// 		},
-// 		{
-// 			input:  "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw",
-// 			output: 26,
-// 		},
-// 	}
+func (suite *TestSuite) Test_FindStartOfMessage() {
+	tests := []struct {
+		input  string
+		output int
+	}{
+		{
+			input:  "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
+			output: 19,
+		},
+		{
+			input:  "bvwbjplbgvbhsrlpgdmjqwftvncz",
+			output: 23,
+		},
+		{
+			input:  "nppdvjthqldpwncqszvftbrmjlhg",
+			output: 23,
+		},
+		{
+			input:  "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
+			output: 29,
+		},
+		{
+			input:  "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw",
+			output: 26,
+		},
+	}
 
-// 	for _, tt := range tests {
+	for _, tt := range tests {
 
-// 		score := CharsToStartOfMessage(tt.input)
+		score := CharsToStartOfMessage(tt.input)
 
-// 		suite.Equal(tt.output, score)
-// 	}
-// }
+		suite.Equal(tt.output, score)
+	}
+}
 
 func TestShouldTest(t *testing.T) {
 	suite.Run(t, new(TestSuite))
