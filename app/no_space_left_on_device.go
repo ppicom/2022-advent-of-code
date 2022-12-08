@@ -31,6 +31,31 @@ func SumOfDirectoriesOfSize100000Max(input string) (totalSize int) {
 	return
 }
 
+const (
+	device_max_capacity int = 70000000
+	update_size         int = 30000000
+)
+
+func SizeOfDirectoryToDelete(input string) (totalSize int) {
+	fs := buildFileSystemFromInput(input)
+
+	totalOccupiedSpace := fs.Root().Weight()
+	freeSpace := device_max_capacity - totalOccupiedSpace
+	spaceToClaim := update_size - freeSpace
+
+	inorder(fs.Root(), func(n node) {
+
+		w := n.Weight()
+
+		if w > spaceToClaim && (w < totalSize || totalSize < spaceToClaim) {
+			totalSize = w
+		}
+
+	})
+
+	return
+}
+
 func buildFileSystemFromInput(input string) fileSystem {
 	input = strings.ReplaceAll(input, "\t", "")
 	input = strings.TrimPrefix(input, "\n")

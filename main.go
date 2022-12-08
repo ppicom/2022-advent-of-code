@@ -16,4 +16,9 @@ func main() {
 	size := app.SumOfDirectoriesOfSize100000Max(string(dat))
 
 	fmt.Printf("The total size of directories below 100000 is %d\n", size)
+
+	size = app.SizeOfDirectoryToDelete(string(dat))
+
+	fmt.Printf("The total size of the dir to delete is %d\n", size)
+
 }
